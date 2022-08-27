@@ -1,0 +1,1 @@
+black .\"path for all the files you want formatted"
