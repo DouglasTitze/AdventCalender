@@ -1,13 +1,57 @@
-with open("input.txt", "r") as f:
-    lines = f.readlines()
-
-drawn_nums = lines.pop(0)
-boards = []
-
-for row in range(1, len(lines)):
-    line = lines[row][:-1]
-    if line != "":
-        boards.append(line)
+import re
 
 
-print(boards)
+def createBoards():
+    with open("input.txt", "r") as f:
+        lines = f.readlines()
+
+    drawn_nums = lines.pop(0).strip().split(",")
+    boards = []
+    cur_borad = []
+
+    for line in lines:
+        line = line.strip()
+
+        if not line:
+            cur_borad = []
+            boards.append(cur_borad)
+            continue
+
+        cur_borad.append(re.split(r"\s+", line))
+
+    boards.append(cur_borad)
+
+    return (drawn_nums, boards)
+
+
+def winner(board):
+    for row in board:
+        if not any(row):
+            return True
+
+    for col in range(len(board[0])):
+        if not any(board[row][col] for row in range(len(board))):
+            return True
+
+    return False
+
+
+def checkBoard(board, num):
+    for row in range(len(board)):
+        for col in range(len(board[row])):
+            if board[row][col] == str(num):
+                board[row][col] = None
+
+
+def calcScore(board, calledNum):
+    return int(calledNum) * sum(int(x) for row in board for x in row if x)
+
+
+drawn_nums, boards = createBoards()
+
+for num in drawn_nums:
+    for board in boards:
+        checkBoard(board, num)
+        if winner(board):
+            print(calcScore(board, num))
+            exit()
