@@ -38,18 +38,20 @@ def placePoint(line, floor):
     if x1 == x2:
 
         iterator = iteratorNum(y1, y2)
+        floor[y1][x1] += 1
 
         while y1 != y2:
-            floor[y1][x1] += 1
             y1 += iterator
+            floor[y1][x1] += 1
 
     elif y1 == y2:
 
         iterator = iteratorNum(x1, x2)
+        floor[y1][x1] += 1
 
         while x1 != x2:
-            floor[y1][x1] += 1
             x1 += iterator
+            floor[y1][x1] += 1
 
     else:
         return False
@@ -81,4 +83,3 @@ for line in floor:
             overlap += 1
 
 print(overlap)
-createTxt(floor)
