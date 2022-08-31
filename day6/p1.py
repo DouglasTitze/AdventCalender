@@ -12,6 +12,8 @@ def parseFile():
 
     return lines
 
+    #One line
+    #return map(int,f.read().strip().split(","))
 
 def createDic(state):
     dic = {}
